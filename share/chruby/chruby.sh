@@ -69,6 +69,16 @@ function chruby()
 				fi
 			done
 
+			if [[ -d "$1" ]]; then
+				if [[ ! -f "$1/.ruby-version" ]]; then
+					echo "No .ruby-version found in $1" >&2
+					return 1
+				fi
+
+				chruby_use $(cat "$1/.ruby-version")
+				return
+			fi
+
 			echo "Unknown Ruby: $1" >&2
 			return 1
 			;;
